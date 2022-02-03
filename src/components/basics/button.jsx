@@ -17,6 +17,7 @@ function Button(props) {
   let cursor = props.cursor;
   let shadow = props.shadow || false;
   let transition = props.transition || false;
+  let disabled = props.disabled || false;
 
   // Define classes
   const classes = {
@@ -30,6 +31,7 @@ function Button(props) {
       `items-center`,
     ],
   };
+  let customStyle = {};
 
   // conditional classes
   if (rounded) {
@@ -68,8 +70,19 @@ function Button(props) {
     classes.root.push(`transition-all`, `duration-200`);
   }
 
+  if (disabled) {
+    customStyle = {
+      cursor: "not-allowed",
+      opacity: 0.1,
+    };
+  }
+
   return (
-    <button onClick={onClick} className={clsx(classes.root)}>
+    <button
+      onClick={onClick}
+      className={clsx(classes.root)}
+      style={customStyle}
+    >
       {children}
     </button>
   );

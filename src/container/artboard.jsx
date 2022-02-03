@@ -92,6 +92,7 @@ function Artboard() {
       name: `Layout ${layoutData.length + 1}`,
       artboard: [],
     };
+    setSelectedShape(null);
     setActiveLayout(layoutData.length);
     array.push(object);
     setLayoutData(() => [...array]);
@@ -210,9 +211,9 @@ function Artboard() {
         return d;
       }
     });
-    setSelectedShape(null);
 
     let layoutArr = layoutData;
+    setSelectedShape(null);
     layoutArr[activeLayout].artboard = array;
     setLayoutData(() => [...layoutArr]);
   };
@@ -249,6 +250,7 @@ function Artboard() {
               ? layoutData[activeLayout].artboard[selectedShape - 1].background
               : defaultShapeColor
           }
+          pickerDisabled={selectedShape === null ? true : false}
         />
 
         {/* Artboard */}

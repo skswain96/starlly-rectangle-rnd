@@ -10,6 +10,7 @@ function Toolbar(props) {
   let onClickColorPicker = props.onClickColorPicker;
   let pickerIconColor = props.pickerIconColor || "#e7e7e7";
   let onClickAddLayout = props.onClickAddLayout;
+  let pickerDisabled = props.pickerDisabled;
 
   // Define classes
   const classes = {
@@ -77,7 +78,7 @@ function Toolbar(props) {
 
       {/* color fill picker */}
       <div className={clsx(classes.wrapper)}>
-        <Button onClick={onClickColorPicker}>
+        <Button onClick={onClickColorPicker} disabled={pickerDisabled}>
           <svg
             aria-hidden="true"
             focusable="false"
