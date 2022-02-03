@@ -66,7 +66,7 @@ function Rectangle(props) {
         onClick={() => onClickShape(index)}
       >
         {layoutIndex === index && (
-          <div
+          <button
             className={clsx(classes.wrapper)}
             onClick={() => {
               onClickDelete(index);
@@ -88,7 +88,7 @@ function Rectangle(props) {
                 className=""
               ></path>
             </svg>
-          </div>
+          </button>
         )}
       </div>
     </Rnd>

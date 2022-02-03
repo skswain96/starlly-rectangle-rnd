@@ -28,6 +28,7 @@ function Artboard() {
   let [isSavingData, setIsSavingData] = useState(false);
   let [activeLayout, setActiveLayout] = useState(0);
   let [editableIndex, setEditableIndex] = useState(null);
+  let [shapedRemoved, setShapedRemoved] = useState(false);
 
   // Define classes
   const classes = {
@@ -140,7 +141,9 @@ function Artboard() {
 
   // function to handle clicks on shapes
   const handleShapeClick = (index) => {
-    setSelectedShape(index);
+    if (layoutData[activeLayout].artboard.length > 0) {
+      setSelectedShape(index);
+    }
   };
 
   // function to decide if color picker needs to be shown or not
@@ -213,9 +216,12 @@ function Artboard() {
     });
 
     let layoutArr = layoutData;
-    setSelectedShape(null);
+
     layoutArr[activeLayout].artboard = array;
     setLayoutData(() => [...layoutArr]);
+    setTimeout(() => {
+      setShapedRemoved(true);
+    }, 100);
   };
 
   // execute on first render
@@ -227,6 +233,16 @@ function Artboard() {
       setLayoutData(parsedsessionStorageData);
     }
   }, []);
+
+  // to ensure that selected shape becomes null when shape is deleted - work around hack
+  useEffect(() => {
+    if (shapedRemoved === true) {
+      setSelectedShape(null);
+      setTimeout(() => {
+        setShapedRemoved(false);
+      }, 500);
+    }
+  }, [shapedRemoved]);
 
   return (
     <div className={clsx(classes.root)}>
@@ -273,7 +289,7 @@ function Artboard() {
                 handleColorChangeComplete={handleColorChangeComplete}
                 onClickShape={handleShapeClick}
                 onClickDelete={handleShapeDelete}
-                onDragStart={() => setSelectedShape(data.index)}
+                // onDragStart={() => setSelectedShape(data.index)}
                 size={{
                   width: data.width,
                   height: data.height,
